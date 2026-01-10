@@ -4,7 +4,7 @@ SECTION MBR vstart = 0x7c00
     mov ax, cs
     mov ds, ax
     mov es, ax
-    mov ds, ax
+    mov ss, ax
     mov fs, ax
     mov sp, 0x7c00  ; 栈指针初始化
     

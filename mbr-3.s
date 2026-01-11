@@ -7,7 +7,7 @@ SECTION MBR vstart = 0x7c00
     mov es, ax
     mov ss, ax
     mov fs, ax
-    mov sp, 0x7c00  ;  栈指针初始化
+    mov sp, 0x7c00  ; 栈指针初始化
     mov ax, 0xb800  ; 显存设置
     mov gs, ax      ; 设置gs指向显存段
 
@@ -20,8 +20,6 @@ SECTION MBR vstart = 0x7c00
     mov dx, 0x184f
     int 0x10
 
-    mov ax, 0xb800
-    mov gs, ax  ; 设置显存段
     ; 显示绿色背景、红色闪烁的"1 MBR"
     mov byte [gs:0x00], '1'
     mov byte [gs:0x01], 0xA4    ; A4 = 10100100b(闪烁+绿背景+红前景)
@@ -34,16 +32,16 @@ SECTION MBR vstart = 0x7c00
     mov byte [gs:0x08], 'R'
     mov byte [gs:0x09], 0xA4
 
-    mov eax, LOADER_START_SECTION   ; 起始扇区lba地址
-    mov bx, LOADER_BASE_SECTION     ; 写入的地址
+    mov eax, LOADER_START_SECTOR    ; 起始扇区lba地址
+    mov bx, LOADER_BASE_ADDR        ; 写入的地址
     mov cx, 1                       ; 待读入的扇区
     call rd_disk_m_16               ; 以下读取程序的起始部分（一个扇区）
 
-    jmp LOAD_BASE_ADDR
+    jmp LOADER_BASE_ADDR
 
 ;------------------------------------------------------------------------------
 ; 功能：读取硬盘n个扇区
-; eax = LAB扇区号
+; eax = LBA扇区号
 ;bx = 将数据写入的内存地址
 ;cx = 读入的扇区数
 ;------------------------------------------------------------------------------
@@ -53,7 +51,7 @@ rd_disk_m_16:
 ; 读写硬盘：
 ; 第一步：设置要读取的扇区数
     mov dx, 0x1f2
-    mov al, cx  
+    mov al, cl 
     out dx, al      ; 读取的扇区数
 
     mov eax, esi    ; 回复eax
@@ -61,23 +59,26 @@ rd_disk_m_16:
 ; 第二步：将LBA地址存入0x1f3~0x1f6
     
     ; LBA地址7~0位写入端口0x1f3
-    mov dx, 0位写入端口0x1f3
+    mov dx, 0x1f3
     out dx, al
 
     ; LBA地址15~8位写入端口0x1f4
-    mov cl, 8
-    shr eax, cl
+    ;mov cl, 8
+    ;shr eax, cl
+    shr eax, 8
     mov dx, 0x1f4
     out dx, al
     
     ; LBA地址23~16位写入端口0x1f5
-    shr eax, cl
+    ;shr eax, cl
+    shr eax, 8
     mov dx, 0x1f5
     out dx, al
 
     ; LBA地址27~24位写入端口0x1f6 设置LBA方式操作磁盘
-    shr exa, cl
-    and al, 0f      ; LBA第24~27位
+    ;shr eax, cl
+    shr eax, 8
+    and al, 0x0f      ; LBA第24~27位
     or al, 0xe0     ; 设置7~4位为1110， 表示LBA模式
     mov dx, 0x1f6
     out dx, al 
@@ -101,7 +102,8 @@ rd_disk_m_16:
     mov ax, di      ; 要读取的扇区数
     mov dx, 256     ; 一个扇区有512字节，每次读入一个字，共需di*512/2次
     mul dx          ; 所以di*256
-    mov cx, axmov dx, 0x1f0
+    mov cx, ax
+    mov dx, 0x1f0
 .go_on_read:
     in ax, dx
     mov [bx], ax

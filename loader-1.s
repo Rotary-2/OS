@@ -1,5 +1,7 @@
+[org LOADER_BASE_ADDR]
 %include "boot.inc"
-    SECTION LOADER vstart = LOADER_BASE_ADDR
+    mov ax, 0xb800
+    mov gs, ax
 
     mov byte [gs:0x00], '2'
     mov byte [gs:0x01], 0xA4    ; A4 = 10100100b(闪烁+绿背景+红前景)

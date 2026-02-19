@@ -106,7 +106,7 @@ void schedule(void) {
     ASSERT(intr_get_status() == INTR_OFF);
 
     struct task_struct* cur = running_thread();
-    if (cur->status == TASK_RUNNING) {           // 若此线程只是cpu时间片到了, 将其加入到就绪队列尾
+    if (cur->status == TASK_RUNNING) {          // 若此线程只是cpu时间片到了, 将其加入到就绪队列尾
         ASSERT(!elem_find(&thread_ready_list, &cur->general_tag));
         list_append(&thread_ready_list, &cur->general_tag);
         cur->ticks = cur->priority;             // 重新将当前线程的ticks再重置为其priority;

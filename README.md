@@ -133,11 +133,11 @@ make run
 
 内存映射表
 
-![image-20260219212026459](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219212026459.png)
+![image-20260219212026459](G:\MyCode\OS\README.assets\image-20260219212026459.png)
 
 #### 2.BIOS是如何苏醒的
 
-![image-20260219212124265](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219212124265.png)
+![image-20260219212124265](G:\MyCode\OS\README.assets\image-20260219212124265.png)
 
 **唤醒流程**：
 
@@ -169,7 +169,7 @@ BIOS约定加载MBR到此地址
 \- 运算单元：算术逻辑运算执行
 \- 存储单元：数据暂存和高速缓存
 
-<img src="C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219212840026.png" alt="image-20260219212840026" style="zoom: 67%;" />
+<img src="G:\MyCode\OS\README.assets\image-20260219212840026.png" alt="image-20260219212840026" style="zoom: 67%;" />
 
 #### 2.分段机制产生原因：
 
@@ -177,7 +177,7 @@ BIOS约定加载MBR到此地址
 \- 通过"段基址×16 + 偏移"实现1MB寻址
 \- 解决8086之前地址硬编码问题
 
-<img src="C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219213007302.png" alt="image-20260219213007302" style="zoom: 67%;" />
+<img src="G:\MyCode\OS\README.assets\image-20260219213007302.png" alt="image-20260219213007302" style="zoom: 67%;" />
 
 #### 3.栈的特点
 
@@ -185,7 +185,7 @@ BIOS约定加载MBR到此地址
 \- 后进先出(LIFO)数据结构，向下增长（高地址向低地址）。
 \- 由SS:SP指定栈顶位置，即第一个可用的数据。
 
-<img src="C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219213213953.png" alt="image-20260219213213953" style="zoom:67%;" />
+<img src="G:\MyCode\OS\README.assets\image-20260219213213953.png" alt="image-20260219213213953" style="zoom:67%;" />
 
 #### 4.实模式特点
 
@@ -216,7 +216,7 @@ BIOS约定加载MBR到此地址
 
 #### 7.MBR需要将磁盘上的程序复制到内存，将控制权交给loader，接下来改造MBR实现硬盘读取，让loader接力MBR
 
-![image-20260219213732788](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219213732788.png)
+![image-20260219213732788](G:\MyCode\OS\README.assets\image-20260219213732788.png)
 
 ## 第四章  保护模式入门
 
@@ -231,7 +231,7 @@ GDT为段描述符数组，由GDTR寄存器指向。选择子用于索引GDT中�
 \- TI位：0表示GDT，1表示LDT。LDT在以后再介绍。
 \- RPL：请求特权级。
 
-<img src="C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219214029443.png" alt="image-20260219214029443" style="zoom: 67%;" />
+<img src="G:\MyCode\OS\README.assets\image-20260219214029443.png" alt="image-20260219214029443" style="zoom: 67%;" />
 
 #### 2.段描述符
 
@@ -240,7 +240,7 @@ GDT为段描述符数组，由GDTR寄存器指向。选择子用于索引GDT中�
 \- 段界限：20位，粒度由G位决定（1字节或4KB）。
 \- 属性字段：类型、特权级、存在位等。
 
-<img src="C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219214235584.png" alt="image-20260219214235584" style="zoom: 67%;" />
+<img src="G:\MyCode\OS\README.assets\image-20260219214235584.png" alt="image-20260219214235584" style="zoom: 67%;" />
 
 #### 3.实现从实模式到保护模式切换的关键步骤：
 
@@ -262,7 +262,7 @@ GDT为段描述符数组，由GDTR寄存器指向。选择子用于索引GDT中�
 \- 通过P位判断段是否位于内存，若P为1，表示在内存，更新段描述符缓冲寄存器和段寄存器，A位由CPU再置1，不是已访问。
                           若P位0，还需先将该段载入内存再处理。
 
-![image-20260219214641496](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219214641496.png)
+![image-20260219214641496](G:\MyCode\OS\README.assets\image-20260219214641496.png)
 
 5.**代码段和数据段的保护**
 
@@ -270,7 +270,7 @@ GDT为段描述符数组，由GDTR寄存器指向。选择子用于索引GDT中�
 \- 指令或数据偏移地址 + 长度 - 1 ≤ 段界限
 \- ***\*举例\****：若实际段界限是 `0x12345FFF`，访问其最后1字节是合法的，但试图读取2字节（会用到下一个地址 `0x12346000`）就会因越界而触发异常。
 
-![image-20260219214832606](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219214832606.png)
+![image-20260219214832606](G:\MyCode\OS\README.assets\image-20260219214832606.png)
 
 #### 6.栈段的保护
 
@@ -278,7 +278,7 @@ GDT为段描述符数组，由GDTR寄存器指向。选择子用于索引GDT中�
 
 每次对栈进行操作前都会先进行预先的判断：实际段界限 + 1 ≤ ESP - 预备操作数大小 ≤ 0xFFFFFFFF
 
-<img src="C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219214949665.png" alt="image-20260219214949665" style="zoom: 67%;" />
+<img src="G:\MyCode\OS\README.assets\image-20260219214949665.png" alt="image-20260219214949665" style="zoom: 67%;" />
 
 ## 第五章  保护模式进阶
 
@@ -289,13 +289,13 @@ GDT为段描述符数组，由GDTR寄存器指向。选择子用于索引GDT中�
 ***\*分页\****可使的线性地址连续，但是物理地址不连续：
 分页机制将内存划分为固定大小的页，通过页表实现虚拟地址到物理地址的映射，解决内存碎片问题。
 
-<img src="C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219215707225.png" alt="image-20260219215707225" style="zoom:67%;" />
+<img src="G:\MyCode\OS\README.assets\image-20260219215707225.png" alt="image-20260219215707225" style="zoom:67%;" />
 
-![image-20260219215549639](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219215549639.png)
+![image-20260219215549639](G:\MyCode\OS\README.assets\image-20260219215549639.png)
 
 #### 2.二级页表
 
-![image-20260219215738112](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219215738112.png)
+![image-20260219215738112](G:\MyCode\OS\README.assets\image-20260219215738112.png)
 
 | 位置 | 属性名称                   | 描述                                                         |
 | ---- | -------------------------- | ------------------------------------------------------------ |
@@ -323,7 +323,7 @@ GDT为段描述符数组，由GDTR寄存器指向。选择子用于索引GDT中�
 2. 将页目录表地址写入CR3寄存器
 3. 设置CR0的PG位
 
-![image-20260219215843850](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219215843850.png)
+![image-20260219215843850](G:\MyCode\OS\README.assets\image-20260219215843850.png)
 
 #### 5.快表TLB
 
@@ -351,7 +351,7 @@ TLB特点：
 		  内核入口地址：0xc0001500   
 		  内核栈指针：   0xc009f000  
 
-![image-20260219220511353](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219220511353.png)
+![image-20260219220511353](G:\MyCode\OS\README.assets\image-20260219220511353.png)
 
 8.特权级
 
@@ -368,9 +368,7 @@ TLB特点：
 
 ​              这种设计确保低特权代码无法越权访问高特权资源，提升系统稳定性。
 
-![image-20260219220553668](C:\Users\XY\AppData\Roaming\Typora\typora-user-images\image-20260219220553668.png)
-
-
+![image-20260219220553668](G:\MyCode\OS\README.assets\image-20260219220553668.png)
 
 
 

@@ -133,11 +133,11 @@ make run
 
 内存映射表
 
-![image-20260219212026459](G:\MyCode\OS\README.assets\image-20260219212026459.png)
+![image-20260219212026459](README.assets/image-20260219212026459.png)
 
 #### 2.BIOS是如何苏醒的
 
-![image-20260219212124265](G:\MyCode\OS\README.assets\image-20260219212124265.png)
+![image-20260219212124265](README.assets/image-20260219212124265.png)
 
 **唤醒流程**：
 
@@ -169,7 +169,7 @@ BIOS约定加载MBR到此地址
 \- 运算单元：算术逻辑运算执行
 \- 存储单元：数据暂存和高速缓存
 
-<img src="G:\MyCode\OS\README.assets\image-20260219212840026.png" alt="image-20260219212840026" style="zoom: 67%;" />
+<img src="README.assets/image-20260219212840026.png" alt="image-20260219212840026" style="zoom: 67%;" />
 
 #### 2.分段机制产生原因：
 
@@ -177,7 +177,7 @@ BIOS约定加载MBR到此地址
 \- 通过"段基址×16 + 偏移"实现1MB寻址
 \- 解决8086之前地址硬编码问题
 
-<img src="G:\MyCode\OS\README.assets\image-20260219213007302.png" alt="image-20260219213007302" style="zoom: 67%;" />
+<img src="README.assets/image-20260219213007302.png" alt="image-20260219213007302" style="zoom: 67%;" />
 
 #### 3.栈的特点
 

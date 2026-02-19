@@ -5,7 +5,7 @@
 #include "thread.h"
 
 /* 信号量结构 */
-struct semphore {
+struct semaphore {
     uint8_t value;
     struct list waiters;
 };
